@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey | A Cinematic Love Story</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables - Premium Luxury Pink Theme */
+        :root {
+            --bg-color: #fff0f5; /* Lavender blush / Soft Pink */
+            --text-main: #4a2333;
+            --text-accent: #d4af37; /* Gold */
+            --clay-bg: rgba(255, 255, 255, 0.4);
+            --clay-shadow: 12px 12px 24px rgba(212, 175, 186, 0.6), 
+                           -12px -12px 24px rgba(255, 255, 255, 0.9);
+            --clay-inset: inset 4px 4px 10px rgba(255, 255, 255, 0.7), 
+                          inset -4px -4px 10px rgba(212, 175, 186, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-main);
+        }
+
+        /* Lenis Smooth Scroll Setup */
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            bottom: -10vh;
+            color: rgba(255, 105, 180, 0.4);
+            font-size: 20px;
+            animation: floatUp 10s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-110vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        /* Typography & Headings */
+        .main-heading {
+            text-align: center;
+            font-size: 4rem;
+            padding: 40px 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-accent);
+            text-shadow: 2px 2px 10px rgba(212, 175, 55, 0.3);
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .emotional-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        /* Layout & Pages */
+        .page-section {
+            position: relative;
+            min-height: 100vh;
+            padding: 80px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .content-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* Claymorphism UI */
+        .clay-card {
+            background: var(--clay-bg);
+            border-radius: 30px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--clay-shadow);
+            max-width: 500px;
+            z-index: 10;
+        }
+
+        /* Image Styling */
+        img {
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: var(--clay-shadow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            border: 4px solid rgba(255, 255, 255, 0.6);
+        }
+        
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 15px 15px 30px rgba(212, 175, 186, 0.8), 
+                        -15px -15px 30px rgba(255, 255, 255, 1);
+            z-index: 20;
+        }
+
+        /* Dynamic Image Ratios & Placements */
+        .img-portrait { aspect-ratio: 3 / 4; width: 100%; }
+        .img-landscape { aspect-ratio: 16 / 9; width: 100%; }
+        .img-square { aspect-ratio: 1 / 1; width: 100%; }
+
+        /* Background Layer Images */
+        .bg-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            z-index: 0;
+            filter: blur(8px);
+        }
+
+        /* Asymmetric Image Grids */
+        .image-cluster {
+            position: relative;
+            flex: 1;
+            min-width: 300px;
+            height: 600px;
+        }
+
+        .img-float { position: absolute; }
+        
+        /* General Positions for Clusters */
+        .pos-1 { top: 0; left: 0; width: 50%; z-index: 2; }
+        .pos-2 { bottom: 10%; right: 0; width: 45%; z-index: 3; }
+        .pos-3 { top: 20%; right: 10%; width: 35%; z-index: 1; }
+        .pos-4 { bottom: 0; left: 10%; width: 60%; z-index: 4; }
+        
+        /* Overlays */
+        .overlay-img {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            top: -50px;
+            right: -30px;
+            z-index: 11;
+        }
+
+        /* Lightbox Fullscreen */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            padding-top: 60px;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        #lightbox img {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+            border: none;
+            border-radius: 10px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px; right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-heading { font-size: 2.5rem; }
+            .content-wrapper { flex-direction: column; text-align: center; }
+            .image-cluster { height: 400px; width: 100%; }
+            .clay-card { margin: 20px auto; padding: 25px; }
+            .pos-1, .pos-2, .pos-3, .pos-4 { width: 45%; }
+            .pos-2 { bottom: 5%; }
+            .overlay-img { width: 80px; height: 80px; top: -20px; right: -10px; }
+        }
+        /* Footer Signature - Designed by Jerry */
+        .footer-signature {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 10;
+        }
+
+        .designer-name {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-accent); /* Gold color */
+            font-size: 1.8rem;
+            font-style: italic;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 1px;
+            margin-left: 5px;
+            text-shadow: 1px 1px 10px rgba(212, 175, 55, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" autoplay loop>
+        <source src="your-romantic-song.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="hearts-container" id="hearts-container"></div>
+
+    <h1 class="main-heading" data-aos="zoom-in" data-aos-duration="1500">OuR JourNey</h1>
+
+    <section class="page-section" id="home">
+        <img src="images/page1_img1.jpg" class="bg-layer" alt="Background">
+        
+        <div class="content-wrapper">
+            <div class="clay-card" data-aos="fade-up" data-aos-duration="1000">
+                <img src="page1_img5.jpg" class="overlay-img" onclick="openLightbox(this.src)" alt="Overlay">
+                <h2 class="section-title">The Beginning</h2>
+                <p class="emotional-text">Not every story begins with something grand…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200">But sometimes, the simplest beginnings create the most beautiful journeys.</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">From two individuals… to one soul… to a family full of love.</p>
+            </div>
+            <div class="image-cluster">
+                <img src="page1_img2.jpg" class="img-float img-portrait pos-1" data-aos="fade-right" onclick="openLightbox(this.src)">
+                <img src="page1_img3.jpg" class="img-float img-portrait pos-2" data-aos="fade-left" onclick="openLightbox(this.src)">
+                <img src="page1_img4.jpg" class="img-float img-square pos-3" data-aos="zoom-in" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="beginning">
+        <img src="images/page2_img4.jpg" class="bg-layer" alt="Background Blur">
+        <div class="content-wrapper" style="flex-direction: row-reverse;">
+            <div class="clay-card" data-aos="fade-left">
+                <img src="page2_img5.jpg" class="overlay-img" style="left: -30px;" onclick="openLightbox(this.src)">
+                <h2 class="section-title">How We Met</h2>
+                <p class="emotional-text">It started with a simple meeting…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200">Two strangers… unaware of what destiny had planned.</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">Moments turned into memories…<br>And memories turned into love.</p>
+            </div>
+            <div class="image-cluster">
+                <img src="page2_img1.jpg" class="img-float img-portrait pos-1" data-aos="zoom-out" onclick="openLightbox(this.src)">
+                <img src="page2_img2.jpg" class="img-float img-landscape pos-4" data-aos="fade-up" onclick="openLightbox(this.src)">
+                <img src="page2_img3.jpg" class="img-float img-portrait pos-3" data-aos="fade-down" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="marriage">
+        <img src="page3_img4.jpg" class="bg-layer" style="filter: blur(10px) brightness(1.2);" alt="Glow bg">
+        <div style="position: absolute; top: 10px; width: 90%; height: 200px; overflow: hidden; border-radius: 20px; z-index: 1;" data-aos="fade-down">
+            <img src="page3_img1.jpg" style="width: 100%; height: 100%; object-fit: cover;" onclick="openLightbox(this.src)">
+        </div>
+        <div class="content-wrapper" style="margin-top: 150px;">
+            <div class="clay-card" data-aos="zoom-in">
+                <h2 class="section-title">The Promise</h2>
+                <p class="emotional-text">Marriage was not just a ceremony…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200">It was a promise to stay together in every moment of life.</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">From that day… we became one journey.</p>
+            </div>
+            <div class="image-cluster">
+                <img src="page3_img2.jpg" class="img-float img-portrait pos-1" style="width: 70%;" data-aos="fade-right" onclick="openLightbox(this.src)">
+                <img src="page3_img3.jpg" class="img-float img-portrait pos-3" style="right: -10%; top: 40%;" data-aos="fade-left" onclick="openLightbox(this.src)">
+                <img src="page3_img5.jpg" class="img-float img-landscape pos-2" style="bottom: -20px;" data-aos="fade-up" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="struggles" style="background: linear-gradient(to bottom, var(--bg-color), #2a1620, var(--bg-color));">
+        <img src="page4_img1.jpg" class="bg-layer" style="opacity: 0.1; filter: grayscale(50%);">
+        <div class="content-wrapper" style="color: #fff;">
+            <div class="image-cluster">
+                <img src="page4_img2.jpg" class="img-float img-portrait pos-1" style="opacity: 0.8;" data-aos="fade-up" onclick="openLightbox(this.src)">
+                <img src="page4_img3.jpg" class="img-float img-portrait pos-2" data-aos="zoom-in" onclick="openLightbox(this.src)">
+                <img src="page4_img4.jpg" class="img-float img-portrait pos-4" style="filter: drop-shadow(0 0 20px #000);" data-aos="fade-right" onclick="openLightbox(this.src)">
+            </div>
+            <div class="clay-card" style="background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2);" data-aos="fade-left">
+                <img src="images/page4_img5.jpg" class="overlay-img" style="box-shadow: 0 0 20px rgba(255,255,255,0.5);" onclick="openLightbox(this.src)">
+                <h2 class="section-title" style="color: #fff;">The Storms</h2>
+                <p class="emotional-text">There were storms…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200">Days that tested our strength…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">But even in the darkest times…<br>We never chose to walk away.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="understanding">
+        <img src="page5_img3.jpg" class="bg-layer" alt="Center Blur">
+        <div class="content-wrapper" style="flex-direction: row-reverse;">
+            <div class="clay-card" data-aos="fade-up">
+                <img src="page5_img5.jpg" class="overlay-img" style="left: -40px; top: 50%; transform: translateY(-50%);" onclick="openLightbox(this.src)">
+                <h2 class="section-title">Soulmates</h2>
+                <p class="emotional-text">We learned each other beyond words…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200">We understood silence, emotions, and dreams.</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">And love became stronger with time.</p>
+            </div>
+            <div class="image-cluster">
+                <img src="page5_img1.jpg" class="img-float img-portrait pos-2" style="width: 60%; right: 10%; bottom: 20%;" data-aos="zoom-in" onclick="openLightbox(this.src)">
+                <img src="page5_img2.jpg" class="img-float img-portrait pos-1" data-aos="fade-down" onclick="openLightbox(this.src)">
+                <img src="page5_img4.jpg" class="img-float img-landscape pos-4" data-aos="fade-up" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="children">
+        <img src="page6_img5.jpg" class="bg-layer" style="opacity: 0.25;" alt="Soft blur">
+        <div class="content-wrapper">
+            <div class="clay-card" data-aos="fade-right">
+                <img src="page6_img3.jpg" class="overlay-img" onclick="openLightbox(this.src)">
+                <h2 class="section-title">Our Greatest Blessing</h2>
+                <p class="emotional-text">Our greatest blessing entered our lives…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200" style="font-size: 1.5rem; font-weight: 500; color: var(--text-accent);">Our children.</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">Their smiles became our happiness…<br>Their presence made everything complete.</p>
+            </div>
+            <div class="image-cluster">
+                <img src="page6_img1.jpg" class="img-float img-portrait pos-1" style="left: 20%; width: 55%; z-index: 5;" data-aos="zoom-in" onclick="openLightbox(this.src)">
+                <img src="page6_img4.jpg" class="img-float img-square pos-3" style="right: -5%;" data-aos="fade-left" onclick="openLightbox(this.src)">
+                <img src="page6_img2.jpg" class="img-float img-landscape pos-4" style="bottom: 5%; left: 0;" data-aos="fade-up" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="memories">
+        <div class="content-wrapper" style="flex-direction: column; text-align: center;">
+            <div class="clay-card" style="margin-bottom: 40px; max-width: 800px;" data-aos="fade-down">
+                <h2 class="section-title">Treasured Moments</h2>
+                <p class="emotional-text">Every moment became a memory… Every memory became a treasure.</p>
+                <p class="emotional-text">These are not just pictures… They are pieces of our life.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 100%;">
+                <img src="page7_img1.jpg" class="img-portrait" style="grid-row: span 2;" data-aos="zoom-in" onclick="openLightbox(this.src)">
+                <img src="page7_img2.jpg" class="img-square" data-aos="fade-up" onclick="openLightbox(this.src)">
+                <img src="page7_img3.jpg" class="img-portrait" data-aos="fade-down" onclick="openLightbox(this.src)">
+                <img src="page7_img4.jpg" class="img-landscape" data-aos="fade-right" onclick="openLightbox(this.src)">
+                <img src="page7_img5.jpg" class="img-square" data-aos="zoom-in" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="forever" style="text-align: center;">
+        <img src="page8_img1.jpg" class="bg-layer" style="opacity: 0.3; filter: brightness(0.8) contrast(1.2);" alt="Sunset">
+        
+        <div style="position: absolute; top: 10%; width: 100%; display: flex; justify-content: center;" data-aos="fade-down">
+             <img src="page8_img3.jpg" style="width: 200px; height: 100px; object-fit: cover; border-radius: 50px; opacity: 0.8;" onclick="openLightbox(this.src)">
+        </div>
+
+        <div class="content-wrapper" style="justify-content: center; flex-direction: column; z-index: 5;">
+            
+            <img src="page8_img2.jpg" class="img-portrait" style="max-width: 300px; border-radius: 50%; box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);" data-aos="zoom-in" onclick="openLightbox(this.src)">
+            
+            <div class="clay-card" style="margin-top: 30px; text-align: center;" data-aos="fade-up">
+                <img src="page8_img5.jpg" class="overlay-img" style="right: auto; left: 40%; top: -60px;" onclick="openLightbox(this.src)">
+                <p class="emotional-text">Time will pass…</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="200">But our love will remain forever.</p>
+                <p class="emotional-text" data-aos="fade-up" data-aos-delay="400">Because in the end…<br>It was always about being together.</p>
+                <h2 class="main-heading" style="font-size: 2rem; margin-top: 20px; padding: 0;" data-aos="zoom-in" data-aos-delay="600">Together… Always ❤️</h2>
+            </div>
+
+            <img src="page8_img4.jpg" class="img-landscape" style="max-width: 400px; margin-top: 30px; opacity: 0.7;" data-aos="fade-up" onclick="openLightbox(this.src)">
+        </div>
+    </section>
+    <footer class="footer-signature" data-aos="fade-up" data-aos-duration="1200">
+        <p>Designed with  by <span class="designer-name">Jerry 🥷🏻</span></p>
+    </footer>
+
+    <div id="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // 1. Initialize Lenis (Smooth Scrolling)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true
+        });
+
+        function raf(time) {
+            
+lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. Initialize AOS (Scroll Animations)
+        AOS.init({
+            once: false,
+            mirror: true,
+            offset: 100,
+            duration: 1000
+        });
+
+        // 3. Floating Hearts Generator
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartsCount = 20; // Number of hearts on screen
+
+            for (let i = 0; i < heartsCount; i++) {
+                let heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+                
+                // Randomize positions and animation delays
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                heart.style.animationDelay = (Math.random() * 10) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // 4. Lightbox Functions
+        function openLightbox(src) {
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox-img').src = src;
+            lenis.stop(); // Stop scrolling when lightbox is open
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            lenis.start(); // Resume scrolling
+        }
+
+        // Close lightbox on click outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
